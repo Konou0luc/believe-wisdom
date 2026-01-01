@@ -159,7 +159,7 @@ export default function ContactPage() {
               <div className="flex items-start space-x-4">
                 <Clock className="text-rose-500 mt-1 flex-shrink-0" size={24} />
                 <div>
-                  <h3 className="font-medium text-gray-900 mb-1">Horaires d'ouverture</h3>
+                  <h3 className="font-medium text-gray-900 mb-1">Horaires d&apos;ouverture</h3>
                   <p className="text-gray-600">Lundi – Samedi : 9h à 19h</p>
                   <p className="text-gray-600">Dimanche : sur rendez-vous uniquement</p>
                 </div>

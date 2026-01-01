@@ -270,7 +270,7 @@ export default function AdminTemoignagesPage() {
                     ))}
                     <span className="ml-2 text-sm text-gray-600">({temoignage.note}/5)</span>
                   </div>
-                  <p className="text-gray-700 italic mb-2">"{temoignage.commentaire}"</p>
+                  <p className="text-gray-700 italic mb-2">&quot;{temoignage.commentaire}&quot;</p>
                   {temoignage.createdAt && (
                     <p className="text-sm text-gray-500">{formatDate(temoignage.createdAt)}</p>
                   )}

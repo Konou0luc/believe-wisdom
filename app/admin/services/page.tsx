@@ -400,7 +400,7 @@ export default function AdminServicesPage() {
                 )}
                 {categories.length === 0 && !loadingCategories && !validationErrors.categorie && (
                   <p className="text-xs text-gray-500 mt-1">
-                    Aucune catégorie disponible. Créez-en une d'abord.
+                    Aucune catégorie disponible. Créez-en une d&apos;abord.
                   </p>
                 )}
               </div>

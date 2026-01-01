@@ -188,7 +188,7 @@ export default function AdminDashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl sm:text-3xl font-normal text-gray-900">Dashboard</h1>
-          <p className="text-sm text-gray-500 mt-1">Vue d'ensemble de votre activité</p>
+          <p className="text-sm text-gray-500 mt-1">Vue d&apos;ensemble de votre activité</p>
         </div>
       </div>
 
@@ -417,7 +417,7 @@ export default function AdminDashboardPage() {
                           ))}
                         </div>
                       </div>
-                      <p className="text-xs text-gray-600 line-clamp-2 mb-2">"{temoignage.commentaire}"</p>
+                      <p className="text-xs text-gray-600 line-clamp-2 mb-2">&quot;{temoignage.commentaire}&quot;</p>
                       <div className="flex items-center justify-between">
                         {temoignage.createdAt && (
                           <p className="text-xs text-gray-400">{formatDate(temoignage.createdAt)}</p>

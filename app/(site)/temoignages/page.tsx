@@ -337,7 +337,7 @@ export default function TemoignagesPage() {
                     ))}
                   </div>
                 </div>
-                <p className="text-gray-700 mb-4 italic leading-relaxed">"{temoignage.commentaire}"</p>
+                <p className="text-gray-700 mb-4 italic leading-relaxed">&quot;{temoignage.commentaire}&quot;</p>
                 <div className="border-t border-rose-200/50 pt-4">
                   <p className="font-medium text-gray-900">{temoignage.nom}</p>
                   {temoignage.createdAt && (

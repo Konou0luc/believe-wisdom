@@ -141,7 +141,7 @@ export default function Home() {
                     <Award className="text-white" size={18} />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Ouvert aujourd'hui</p>
+                    <p className="text-sm font-medium text-gray-900">Ouvert aujourd&apos;hui</p>
                     <p className="text-xs text-gray-500">9h - 19h</p>
                   </div>
                 </div>
@@ -310,7 +310,7 @@ export default function Home() {
           <h2 className="text-4xl lg:text-6xl font-normal text-white mb-6 leading-tight">
             Prête à vivre
             <br />
-            l'expérience ?
+            l&apos;expérience ?
           </h2>
           <p className="text-lg lg:text-xl text-white/90 mb-10 leading-relaxed font-light max-w-2xl mx-auto">
             Réservez votre rendez-vous et offrez-vous un moment de détente et de bien-être

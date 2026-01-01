@@ -23,7 +23,7 @@ export default function AboutPage() {
               BELIEVE & WISDOM
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto font-light">
-              Votre institut de beauté et de bien-être dédié à la détente, à la beauté et à l'équilibre intérieur.
+              Votre institut de beauté et de bien-être dédié à la détente, à la beauté et à l&apos;équilibre intérieur.
             </p>
           </motion.div>
         </div>
@@ -42,7 +42,7 @@ export default function AboutPage() {
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p className="text-lg">
                   Bienvenue chez <strong className="text-gray-900">BELIEVE & WISDOM</strong>, votre institut de beauté et de bien-être.
-                  Nous vous proposons un espace apaisant dédié à la détente, à la beauté et à l'équilibre intérieur.
+                  Nous vous proposons un espace apaisant dédié à la détente, à la beauté et à l&apos;équilibre intérieur.
                 </p>
                 <p className="text-lg">
                   Nos soins du visage, du corps et nos massages sont conçus pour vous offrir un moment unique,

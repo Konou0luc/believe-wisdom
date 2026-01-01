@@ -39,7 +39,7 @@ export default function GaleriePage() {
             Découvrez notre univers
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto font-light">
-            Plongez dans l'ambiance apaisante et élégante de BELIEVE & WISDOM
+            Plongez dans l&apos;ambiance apaisante et élégante de BELIEVE & WISDOM
           </p>
         </motion.div>
 

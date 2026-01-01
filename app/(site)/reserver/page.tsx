@@ -302,7 +302,7 @@ function ReservationFormContent() {
                 </div>
               ) : services.length === 0 ? (
                 <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-yellow-800 text-sm">
-                  Aucun service disponible pour le moment. Veuillez contacter l'institut directement.
+                  Aucun service disponible pour le moment. Veuillez contacter l&apos;institut directement.
                 </div>
               ) : (
                 <select

@@ -146,7 +146,7 @@ export default function AdminRegisterPage() {
           <h1 className="text-3xl font-normal text-gray-900 mb-2" style={{ fontFamily: 'var(--font-display)' }}>
             BELIEVE & WISDOM
           </h1>
-          <p className="text-gray-600 text-sm">Création d'un compte administrateur</p>
+          <p className="text-gray-600 text-sm">Création d&apos;un compte administrateur</p>
         </div>
 
         {error && (
