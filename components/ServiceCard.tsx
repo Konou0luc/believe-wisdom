@@ -1,6 +1,6 @@
 'use client';
 
-import { Service } from '@/lib/api';
+import { Service, Category } from '@/lib/api';
 import { formatPrice } from '@/lib/utils';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -13,8 +13,16 @@ interface ServiceCardProps {
   index?: number;
 }
 
-const getServiceImage = (categorie: string) => {
-  const lowerCat = categorie.toLowerCase();
+const getCategoryName = (categorie: string | Category): string => {
+  if (typeof categorie === 'string') {
+    return categorie;
+  }
+  return categorie?.nom || 'Non catégorisé';
+};
+
+const getServiceImage = (categorie: string | Category) => {
+  const categoryName = getCategoryName(categorie);
+  const lowerCat = categoryName.toLowerCase();
   if (lowerCat.includes('visage') || lowerCat.includes('face')) return images.facial;
   if (lowerCat.includes('corps') || lowerCat.includes('body')) return images.body;
   if (lowerCat.includes('massage') || lowerCat.includes('bien-être')) return images.massage;
@@ -22,6 +30,7 @@ const getServiceImage = (categorie: string) => {
 };
 
 export default function ServiceCard({ service, index = 0 }: ServiceCardProps) {
+  const categoryName = getCategoryName(service.categorie);
   const serviceImage = getServiceImage(service.categorie);
   
   return (
@@ -45,7 +54,7 @@ export default function ServiceCard({ service, index = 0 }: ServiceCardProps) {
         
         <div className="absolute top-4 left-4">
           <span className="px-3 py-1.5 bg-white/95 backdrop-blur-sm text-rose-600 rounded-lg text-xs font-medium uppercase tracking-wider shadow-sm">
-            {service.categorie}
+            {categoryName}
           </span>
         </div>
       </div>

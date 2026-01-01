@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { servicesApi, Service } from '@/lib/api';
+import { servicesApi, Service, Category } from '@/lib/api';
 import { formatPrice } from '@/lib/utils';
 import EmptyState from '@/components/EmptyState';
 import ErrorState from '@/components/ErrorState';
@@ -34,11 +34,19 @@ export default function TarifsPage() {
     }
   };
 
-  const groupedServices = services.reduce((acc, service) => {
-    if (!acc[service.categorie]) {
-      acc[service.categorie] = [];
+  const getCategoryName = (categorie: string | Category): string => {
+    if (typeof categorie === 'string') {
+      return categorie;
     }
-    acc[service.categorie].push(service);
+    return categorie?.nom || 'Non catégorisé';
+  };
+
+  const groupedServices = services.reduce((acc, service) => {
+    const categoryName = getCategoryName(service.categorie);
+    if (!acc[categoryName]) {
+      acc[categoryName] = [];
+    }
+    acc[categoryName].push(service);
     return acc;
   }, {} as Record<string, Service[]>);
 

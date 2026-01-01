@@ -41,12 +41,12 @@ export default function AdminReservationsPage() {
   const handleStatusChange = async (id: string, statut: Reservation['statut']) => {
     try {
       await reservationsApi.updateStatus(id, statut);
-      const statusMessages = {
+      const statusMessages: Record<string, string> = {
         confirme: 'Réservation confirmée',
         annule: 'Réservation annulée',
         en_attente: 'Réservation mise en attente',
       };
-      showSuccess(statusMessages[statut] || 'Statut mis à jour');
+      showSuccess(statut ? (statusMessages[statut] || 'Statut mis à jour') : 'Statut mis à jour');
       loadReservations();
     } catch (err: any) {
       const errorData = err?.response?.data;

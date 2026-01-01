@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { servicesApi, Service } from '@/lib/api';
+import { servicesApi, Service, Category } from '@/lib/api';
 import ServiceCard from '@/components/ServiceCard';
 import EmptyState from '@/components/EmptyState';
 import ErrorState from '@/components/ErrorState';
@@ -35,10 +35,26 @@ export default function ServicesPage() {
     }
   };
 
-  const categories = ['all', ...Array.from(new Set(services.map(s => s.categorie)))];
+  const getCategoryName = (categorie: string | Category): string => {
+    if (typeof categorie === 'string') {
+      return categorie;
+    }
+    return categorie?.nom || '';
+  };
+
+  const getCategoryId = (categorie: string | Category): string => {
+    if (typeof categorie === 'string') {
+      return categorie;
+    }
+    return categorie?._id || categorie?.nom || '';
+  };
+
+  const categoryNames = Array.from(new Set(services.map(s => getCategoryName(s.categorie)))).filter(Boolean);
+  const categories = ['all', ...categoryNames];
+  
   const filteredServices = selectedCategory === 'all' 
     ? services 
-    : services.filter(s => s.categorie === selectedCategory);
+    : services.filter(s => getCategoryName(s.categorie) === selectedCategory);
 
   return (
     <div className="bg-white min-h-screen py-20">
