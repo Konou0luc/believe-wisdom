@@ -3,10 +3,12 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { servicesApi, reservationsApi, Service, Category } from '@/lib/api';
+import { servicesApi, reservationsApi, Service, Category, Reservation } from '@/lib/api';
 import Button from '@/components/Button';
 import ErrorState from '@/components/ErrorState';
 import { useToast } from '@/contexts/ToastContext';
+import { useNotifications } from '@/contexts/NotificationContext';
+import { formatDateTime } from '@/lib/utils';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -22,6 +24,7 @@ interface ReservationForm {
 
 function ReservationFormContent() {
   const { showSuccess, showError } = useToast();
+  const { addNotification } = useNotifications();
   const searchParams = useSearchParams();
   const serviceId = searchParams.get('service');
   const [services, setServices] = useState<Service[]>([]);
@@ -68,7 +71,29 @@ function ReservationFormContent() {
     setValidationErrors({});
 
     try {
-      await reservationsApi.create(data);
+      const response = await reservationsApi.create(data);
+      const createdReservation: Reservation = response.data;
+      
+      // Sauvegarder l'email pour faciliter l'accès aux réservations
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('reservation_email', data.email);
+      }
+      
+      // Trouver le nom du service
+      const selectedService = services.find(s => 
+        s._id === data.typeService || s.titre === data.typeService
+      );
+      const serviceName = selectedService?.titre || data.typeService;
+      
+      // Créer une notification pour la réservation créée
+      addNotification({
+        reservationId: createdReservation._id || '',
+        type: 'status_change',
+        title: 'Réservation créée',
+        message: `Votre réservation pour "${serviceName}" du ${formatDateTime(data.date, data.heure)} a été créée avec succès. Elle est en attente de confirmation.`,
+        reservation: createdReservation,
+      });
+      
       showSuccess('Votre demande de réservation a été envoyée avec succès. Nous vous contacterons bientôt pour confirmer.');
       setTimeout(() => {
         window.location.href = '/reserver';
@@ -301,7 +326,7 @@ function ReservationFormContent() {
                   <span className="ml-2 text-gray-600">Chargement des services...</span>
                 </div>
               ) : services.length === 0 ? (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-yellow-800 text-sm">
+                <div className="bg-beige-50 border border-beige-200 rounded-xl p-4 text-beige-800 text-sm">
                   Aucun service disponible pour le moment. Veuillez contacter l&apos;institut directement.
                 </div>
               ) : (

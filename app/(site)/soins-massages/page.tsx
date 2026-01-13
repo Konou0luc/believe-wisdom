@@ -7,6 +7,7 @@ import EmptyState from '@/components/EmptyState';
 import ErrorState from '@/components/ErrorState';
 import { Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export default function ServicesPage() {
   const [services, setServices] = useState<Service[]>([]);
@@ -57,42 +58,89 @@ export default function ServicesPage() {
     : services.filter(s => getCategoryName(s.categorie) === selectedCategory);
 
   return (
-    <div className="bg-white min-h-screen py-20">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <div className="bg-white min-h-screen">
+      {/* Hero Section avec image visuelle */}
+      <section className="relative py-32 lg:py-40 overflow-hidden bg-gradient-to-b from-rose-50/30 via-white to-white">
+        <div className="absolute top-0 left-0 right-0 h-full bg-gradient-to-r from-rose-100/20 via-transparent to-beige-100/20" />
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
           <p className="text-xs font-medium text-rose-500 uppercase tracking-wider mb-4">
             Soins & Massages
           </p>
-          <h1 className="text-4xl lg:text-5xl font-normal text-gray-900 mb-6">
+            <h1 className="text-4xl lg:text-6xl font-normal text-gray-900 mb-6">
             Nos prestations
           </h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto font-light">
+            <p className="text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto font-light leading-relaxed">
             Nous vous proposons une gamme complète de soins personnalisés pour le visage et le corps,
             ainsi que des massages bien-être adaptés à vos besoins.
           </p>
         </motion.div>
 
+          {/* Grille d'images des catégories */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            {[
+              { image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&q=85', title: 'Soins Visage', desc: 'Hydratation et éclat' },
+              { image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=85', title: 'Soins Corps', desc: 'Gommage et raffermissement' },
+              { image: 'https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=800&q=85', title: 'Massages', desc: 'Détente et bien-être' }
+            ].map((cat, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group"
+              >
+                <div className="relative aspect-[4/3]">
+                  <Image
+                    src={cat.image}
+                    alt={cat.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <h2 className="text-2xl font-normal text-white mb-1">{cat.title}</h2>
+                    <p className="text-sm text-white/90 font-light">{cat.desc}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services List Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+
         {categories.length > 1 && (
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="flex flex-wrap justify-center gap-3 mb-16"
+            >
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                  className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
                   selectedCategory === category
-                    ? 'bg-rose-500 text-white shadow-sm'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? 'bg-rose-500 text-white shadow-md scale-105'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:shadow-sm'
                 }`}
               >
                 {category === 'all' ? 'Tous' : category}
               </button>
             ))}
-          </div>
+            </motion.div>
         )}
 
         {loading ? (
@@ -141,6 +189,7 @@ export default function ServicesPage() {
           </div>
         </motion.div>
       </div>
+      </section>
     </div>
   );
 }

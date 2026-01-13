@@ -111,10 +111,10 @@ export default function AdminCategoriesPage() {
         showError(mainMessage);
       } else {
         const errorMessage = errorData?.message || 
-                            err?.message || 
-                            'Une erreur est survenue lors de la sauvegarde. Veuillez réessayer.';
+                          err?.message || 
+                          'Une erreur est survenue lors de la sauvegarde. Veuillez réessayer.';
         setFormError(errorMessage);
-        showError(errorMessage);
+      showError(errorMessage);
       }
       
       console.error('Erreur lors de la sauvegarde:', err);
@@ -376,7 +376,7 @@ export default function AdminCategoriesPage() {
                 <div className="flex space-x-2">
                   <button
                     onClick={() => handleEdit(category)}
-                    className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                    className="p-2 text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
                     title="Modifier"
                   >
                     <Edit size={18} />

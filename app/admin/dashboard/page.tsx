@@ -147,46 +147,46 @@ export default function AdminDashboardPage() {
       label: 'Réservations', 
       value: stats.reservations.total, 
       icon: Calendar, 
-      color: 'bg-blue-500',
+      color: 'bg-rose-400',
       link: '/admin/reservations',
       badge: stats.reservations.enAttente > 0 ? stats.reservations.enAttente : undefined,
-      badgeColor: 'bg-yellow-500'
+      badgeColor: 'bg-beige-300'
     },
     { 
       label: 'Témoignages', 
       value: stats.temoignages.total, 
       icon: MessageSquare, 
-      color: 'bg-green-500',
+      color: 'bg-rose-600',
       link: '/admin/temoignages',
       badge: stats.temoignages.enAttente > 0 ? stats.temoignages.enAttente : undefined,
-      badgeColor: 'bg-yellow-500'
+      badgeColor: 'bg-beige-300'
     },
     { 
       label: 'Messages', 
       value: stats.contacts.total, 
       icon: Mail, 
-      color: 'bg-purple-500',
+      color: 'bg-rose-500',
       link: '/admin/contacts',
       badge: stats.contacts.nonLus > 0 ? stats.contacts.nonLus : undefined,
-      badgeColor: 'bg-red-500'
+      badgeColor: 'bg-rose-600'
     },
   ];
 
   const getStatusBadge = (statut?: string) => {
     switch (statut) {
       case 'confirme':
-        return <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">Confirmé</span>;
+        return <span className="px-2 py-1 rounded-full text-xs font-medium bg-rose-100 text-rose-700">Confirmé</span>;
       case 'annule':
-        return <span className="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">Annulé</span>;
+        return <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-200 text-gray-700">Annulé</span>;
       default:
-        return <span className="px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">En attente</span>;
+        return <span className="px-2 py-1 rounded-full text-xs font-medium bg-beige-200 text-beige-800">En attente</span>;
     }
   };
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
+    <div>
           <h1 className="text-2xl sm:text-3xl font-normal text-gray-900">Dashboard</h1>
           <p className="text-sm text-gray-500 mt-1">Vue d&apos;ensemble de votre activité</p>
         </div>
@@ -199,15 +199,15 @@ export default function AdminDashboardPage() {
       ) : (
         <>
           {/* Cartes de statistiques principales */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {statCards.map((stat, idx) => {
-              const Icon = stat.icon;
-              return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {statCards.map((stat, idx) => {
+            const Icon = stat.icon;
+            return (
                 <Link key={stat.label} href={stat.link}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: idx * 0.1 }}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
                     className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all cursor-pointer group"
                   >
                     <div className="flex items-center justify-between mb-4">
@@ -253,28 +253,28 @@ export default function AdminDashboardPage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <Clock className="text-yellow-500" size={18} />
+                    <Clock className="text-beige-600" size={18} />
                     <span className="text-sm text-gray-600">En attente</span>
                   </div>
                   <span className="text-lg font-medium text-gray-900">{stats.reservations.enAttente}</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div 
-                    className="bg-yellow-500 h-2 rounded-full transition-all"
+                    className="bg-beige-400 h-2 rounded-full transition-all"
                     style={{ width: `${stats.reservations.total > 0 ? (stats.reservations.enAttente / stats.reservations.total) * 100 : 0}%` }}
                   />
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <CheckCircle className="text-green-500" size={18} />
+                    <CheckCircle className="text-rose-500" size={18} />
                     <span className="text-sm text-gray-600">Confirmées</span>
                   </div>
                   <span className="text-lg font-medium text-gray-900">{stats.reservations.confirme}</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div 
-                    className="bg-green-500 h-2 rounded-full transition-all"
+                    className="bg-rose-500 h-2 rounded-full transition-all"
                     style={{ width: `${stats.reservations.total > 0 ? (stats.reservations.confirme / stats.reservations.total) * 100 : 0}%` }}
                   />
                 </div>
@@ -300,8 +300,8 @@ export default function AdminDashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100"
-            >
+                className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100"
+              >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-medium text-gray-900">Témoignages</h2>
                 <Link href="/admin/temoignages" className="text-rose-600 text-sm hover:text-rose-700 flex items-center">
@@ -312,35 +312,35 @@ export default function AdminDashboardPage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <CheckCircle className="text-green-500" size={18} />
+                    <CheckCircle className="text-rose-500" size={18} />
                     <span className="text-sm text-gray-600">Approuvés</span>
                   </div>
                   <span className="text-lg font-medium text-gray-900">{stats.temoignages.approuves}</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div 
-                    className="bg-green-500 h-2 rounded-full transition-all"
+                    className="bg-rose-500 h-2 rounded-full transition-all"
                     style={{ width: `${stats.temoignages.total > 0 ? (stats.temoignages.approuves / stats.temoignages.total) * 100 : 0}%` }}
                   />
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <Clock className="text-yellow-500" size={18} />
+                    <Clock className="text-beige-600" size={18} />
                     <span className="text-sm text-gray-600">En attente</span>
                   </div>
                   <span className="text-lg font-medium text-gray-900">{stats.temoignages.enAttente}</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div 
-                    className="bg-yellow-500 h-2 rounded-full transition-all"
+                    className="bg-beige-400 h-2 rounded-full transition-all"
                     style={{ width: `${stats.temoignages.total > 0 ? (stats.temoignages.enAttente / stats.temoignages.total) * 100 : 0}%` }}
                   />
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t border-gray-100">
                   <div className="flex items-center space-x-2">
-                    <Star className="text-yellow-400 fill-current" size={18} />
+                    <Star className="text-rose-400 fill-current" size={18} />
                     <span className="text-sm text-gray-600">Note moyenne</span>
                   </div>
                   <span className="text-lg font-medium text-gray-900">{stats.temoignages.moyenneNote.toFixed(1)} / 5</span>
@@ -412,7 +412,7 @@ export default function AdminDashboardPage() {
                             <Star
                               key={star}
                               size={12}
-                              className={star <= (temoignage.note || 0) ? 'text-yellow-400 fill-current' : 'text-gray-300'}
+                              className={star <= (temoignage.note || 0) ? 'text-rose-400 fill-current' : 'text-gray-300'}
                             />
                           ))}
                         </div>
@@ -423,7 +423,7 @@ export default function AdminDashboardPage() {
                           <p className="text-xs text-gray-400">{formatDate(temoignage.createdAt)}</p>
                         )}
                         {!temoignage.approuve && (
-                          <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+                          <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-beige-200 text-beige-800">
                             En attente
                           </span>
                         )}
@@ -471,8 +471,8 @@ export default function AdminDashboardPage() {
                   ))}
                 </div>
               )}
-            </motion.div>
-          </div>
+              </motion.div>
+        </div>
         </>
       )}
     </div>

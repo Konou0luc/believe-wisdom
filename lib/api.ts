@@ -22,10 +22,23 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Log des erreurs pour le débogage (sauf les erreurs 401/403 qui sont gérées ailleurs)
+    const status = error.response?.status;
+    
+    // Gérer les erreurs d'authentification (401/403)
+    if (status === 401 || status === 403) {
+      // Supprimer le token invalide
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('token');
+        // Rediriger vers la page de login si on est sur une route admin
+        const currentPath = window.location.pathname;
+        if (currentPath.startsWith('/admin') && !currentPath.includes('/login') && !currentPath.includes('/register')) {
+          window.location.href = '/admin/login';
+        }
+      }
+    }
+    
+    // Log des erreurs pour le débogage (sauf les erreurs 401/403 qui sont gérées ci-dessus)
     if (process.env.NODE_ENV === 'development') {
-      const status = error.response?.status;
-      // Ne pas logger les erreurs d'authentification (gérées par le layout)
       if (status !== 401 && status !== 403) {
         const errorInfo: Record<string, any> = {};
         if (error.config?.url) errorInfo.url = error.config.url;
@@ -119,6 +132,7 @@ export const reservationsApi = {
   create: (data: Omit<Reservation, '_id' | 'statut' | 'createdAt'>) => 
     api.post<Reservation>('/reservations', data),
   getAll: () => api.get<Reservation[]>('/reservations'),
+  getByEmail: (email: string) => api.get<Reservation[]>(`/reservations/email/${encodeURIComponent(email)}`),
   updateStatus: (id: string, statut: Reservation['statut']) => 
     api.put<Reservation>(`/reservations/${id}`, { statut }),
 };

@@ -239,8 +239,8 @@ export default function TemoignagesPage() {
                           }
                         }}
                         className={`${
-                          star <= formData.note ? 'text-yellow-400' : 'text-gray-300'
-                        } hover:text-yellow-400 transition-colors`}
+                          star <= formData.note ? 'text-rose-400' : 'text-gray-300'
+                        } hover:text-rose-400 transition-colors`}
                       >
                         <Star size={32} fill={star <= formData.note ? 'currentColor' : 'none'} />
                       </button>
@@ -332,7 +332,7 @@ export default function TemoignagesPage() {
                       <Star
                         key={star}
                         size={18}
-                        className={star <= temoignage.note ? 'text-yellow-400 fill-current' : 'text-gray-300'}
+                        className={star <= temoignage.note ? 'text-rose-400 fill-current' : 'text-gray-300'}
                       />
                     ))}
                   </div>

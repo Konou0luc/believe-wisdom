@@ -28,6 +28,12 @@ export default function AdminReservationsPage() {
       const response = await reservationsApi.getAll();
       setReservations(response.data || []);
     } catch (err: any) {
+      // Ne pas afficher d'erreur si c'est une erreur 401 (redirection automatique gérée par l'intercepteur)
+      if (err?.response?.status === 401 || err?.response?.status === 403) {
+        // La redirection sera gérée par l'intercepteur Axios
+        return;
+      }
+      
       const errorMessage = err?.response?.data?.message || 
                           err?.message || 
                           'Impossible de charger les réservations. Vérifiez votre connexion internet ou réessayez plus tard.';
@@ -64,9 +70,9 @@ export default function AdminReservationsPage() {
         showError(validationErrors || 'Erreurs de validation détectées');
       } else {
         const errorMessage = errorData?.message || 
-                            err?.message || 
-                            'Une erreur est survenue lors de la mise à jour. Veuillez réessayer.';
-        showError(errorMessage);
+                          err?.message || 
+                          'Une erreur est survenue lors de la mise à jour. Veuillez réessayer.';
+      showError(errorMessage);
       }
       
       console.error('Erreur lors de la mise à jour:', err);
@@ -75,11 +81,11 @@ export default function AdminReservationsPage() {
 
   const getStatusBadge = (statut?: string) => {
     const styles = {
-      en_attente: 'bg-yellow-100 text-yellow-800',
-      confirme: 'bg-green-100 text-green-800',
-      confirmé: 'bg-green-100 text-green-800',
-      annule: 'bg-red-100 text-red-800',
-      annulé: 'bg-red-100 text-red-800',
+      en_attente: 'bg-beige-200 text-beige-800',
+      confirme: 'bg-rose-100 text-rose-800',
+      confirmé: 'bg-rose-100 text-rose-800',
+      annule: 'bg-gray-200 text-gray-800',
+      annulé: 'bg-gray-200 text-gray-800',
     };
     return styles[statut as keyof typeof styles] || styles.en_attente;
   };
@@ -121,7 +127,7 @@ export default function AdminReservationsPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-        <div>
+    <div>
           <h1 className="text-2xl sm:text-3xl font-normal text-gray-900 mb-2">Réservations</h1>
           <p className="text-sm text-gray-500">Gérez les réservations de vos clients</p>
         </div>
@@ -145,7 +151,7 @@ export default function AdminReservationsPage() {
             className="bg-white rounded-xl shadow-sm p-4 border border-gray-100"
           >
             <p className="text-sm text-gray-600 mb-1">En attente</p>
-            <p className="text-2xl font-medium text-yellow-600">{stats.enAttente}</p>
+            <p className="text-2xl font-medium text-beige-600">{stats.enAttente}</p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -241,40 +247,40 @@ export default function AdminReservationsPage() {
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[800px]">
-              <thead className="bg-beige-50">
-                <tr>
+            <thead className="bg-beige-50">
+              <tr>
                   <th className="px-4 sm:px-6 py-4 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Client</th>
                   <th className="px-4 sm:px-6 py-4 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Service</th>
                   <th className="px-4 sm:px-6 py-4 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Date & Heure</th>
                   <th className="px-4 sm:px-6 py-4 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Contact</th>
                   <th className="px-4 sm:px-6 py-4 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Statut</th>
                   <th className="px-4 sm:px-6 py-4 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
                 {filteredReservations.map((reservation) => (
-                  <tr key={reservation._id} className="hover:bg-gray-50 transition-colors">
+                <tr key={reservation._id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-4 sm:px-6 py-4">
-                      <div className="font-medium text-gray-900">{reservation.nom}</div>
-                    </td>
+                    <div className="font-medium text-gray-900">{reservation.nom}</div>
+                  </td>
                     <td className="px-4 sm:px-6 py-4 text-gray-600">{reservation.typeService}</td>
                     <td className="px-4 sm:px-6 py-4 text-gray-600">
-                      {reservation.date && reservation.heure && (
-                        <div>
-                          <div>{new Date(reservation.date).toLocaleDateString('fr-FR')}</div>
-                          <div className="text-sm">{reservation.heure}</div>
-                        </div>
-                      )}
-                    </td>
+                    {reservation.date && reservation.heure && (
+                      <div>
+                        <div>{new Date(reservation.date).toLocaleDateString('fr-FR')}</div>
+                        <div className="text-sm">{reservation.heure}</div>
+                      </div>
+                    )}
+                  </td>
                     <td className="px-4 sm:px-6 py-4">
-                      <div className="text-sm text-gray-600">{reservation.email}</div>
-                      <div className="text-sm text-gray-600">{reservation.telephone}</div>
-                    </td>
+                    <div className="text-sm text-gray-600">{reservation.email}</div>
+                    <div className="text-sm text-gray-600">{reservation.telephone}</div>
+                  </td>
                     <td className="px-4 sm:px-6 py-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusBadge(reservation.statut)}`}>
-                        {reservation.statut || 'en_attente'}
-                      </span>
-                    </td>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusBadge(reservation.statut)}`}>
+                      {reservation.statut || 'en_attente'}
+                    </span>
+                  </td>
                     <td className="px-4 sm:px-6 py-4">
                     <div className="flex space-x-2">
                       {!isStatusConfirmed(reservation.statut) && !isStatusCancelled(reservation.statut) && (
@@ -302,11 +308,11 @@ export default function AdminReservationsPage() {
                         <span className="text-xs text-gray-500 italic">Annulée</span>
                       )}
                     </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
           </div>
         </div>
       )}

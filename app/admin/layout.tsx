@@ -15,9 +15,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   useEffect(() => {
     setMounted(true);
     const token = localStorage.getItem('token');
-    const publicRoutes = ['/admin/login', '/admin/register'];
+    const publicRoutes = ['/admin/login', '/admin/register', '/admin'];
+    
+    // Si pas de token et route protégée, rediriger vers login
     if (!token && !publicRoutes.includes(pathname)) {
       router.push('/admin/login');
+    }
+    
+    // Si on est sur /admin, rediriger vers dashboard
+    if (pathname === '/admin' && token) {
+      router.push('/admin/dashboard');
     }
   }, [router, pathname]);
 

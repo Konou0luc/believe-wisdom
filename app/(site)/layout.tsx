@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function SiteLayout({
   children,
@@ -9,7 +10,8 @@ export default function SiteLayout({
   return (
     <>
       <Header />
-      <main className="min-h-screen pt-20">
+      <Breadcrumb />
+      <main className="min-h-screen">
         {children}
       </main>
       <Footer />

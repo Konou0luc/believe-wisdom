@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Award, Star, Heart, Sparkles, Check } from 'lucide-react';
 import Image from 'next/image';
 import { images } from '@/lib/images';
+import { useState, useRef } from 'react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -30,10 +31,13 @@ const itemVariants = {
 };
 
 export default function Home() {
+  const [videoError, setVideoError] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white via-rose-50/20 to-beige-50">
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white via-rose-50/30 to-beige-50">
         <div className="absolute top-32 right-20 w-[400px] h-[400px] bg-rose-200/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-32 left-20 w-[500px] h-[500px] bg-beige-200/20 rounded-full blur-3xl pointer-events-none" />
         
@@ -151,8 +155,73 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Services Preview Section - Show services directly */}
+      <section className="py-16 lg:py-20 bg-white border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl lg:text-4xl font-normal text-gray-900 mb-4">
+              Nos Services en Images
+            </h2>
+            <p className="text-base text-gray-600 max-w-2xl mx-auto font-light">
+              Découvrez visuellement ce que nous proposons
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {[
+              {
+                image: images.facial,
+                title: 'Soins Visage',
+                description: 'Traitements personnalisés pour votre visage'
+              },
+              {
+                image: images.body,
+                title: 'Soins Corps',
+                description: 'Gommages et enveloppements raffinés'
+              },
+              {
+                image: images.massage,
+                title: 'Massages',
+                description: 'Détente et bien-être garantis'
+              }
+            ].map((service, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                whileHover={{ y: -4 }}
+                className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <h3 className="text-xl font-normal text-white mb-1">{service.title}</h3>
+                    <p className="text-sm text-white/90 font-light">{service.description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
-      <section className="py-24 lg:py-32 bg-white">
+      <section className="py-24 lg:py-32 bg-gradient-to-b from-white to-rose-50/20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -257,9 +326,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
             {[
-              { icon: Heart, value: '500+', label: 'Clients satisfaits', color: 'bg-blue-500' },
-              { icon: Award, value: '10+', label: 'Années d\'expérience', color: 'bg-purple-500' },
-              { icon: Star, value: '4.9/5', label: 'Note moyenne', color: 'bg-yellow-500' },
+              { icon: Heart, value: '500+', label: 'Clients satisfaits', color: 'bg-rose-400' },
+              { icon: Award, value: '10+', label: 'Années d\'expérience', color: 'bg-rose-500' },
+              { icon: Star, value: '4.9/5', label: 'Note moyenne', color: 'bg-rose-600' },
               { icon: Heart, value: '100%', label: 'Satisfaction', color: 'bg-rose-500' },
             ].map((stat, idx) => {
               const Icon = stat.icon;
@@ -290,14 +359,41 @@ export default function Home() {
       {/* CTA Section */}
       <section className="relative py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0">
+          {/* Image de fallback par défaut */}
           <Image
             src={images.spa}
             alt="Background"
             fill
-            className="object-cover"
+            className="absolute inset-0 object-cover"
             sizes="100vw"
+            priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-rose-600/95 via-rose-500/95 to-rose-400/95" />
+          {/* Video Background - se superpose à l'image si elle charge */}
+          {!videoError && (
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+              onError={() => {
+                setVideoError(true);
+              }}
+              onLoadedData={() => {
+                // Vidéo chargée avec succès
+                if (videoRef.current) {
+                  videoRef.current.play().catch(() => {
+                    setVideoError(true);
+                  });
+                }
+              }}
+            >
+              {/* Vidéo locale - Placez votre vidéo dans /public/videos/spa-background.mp4 */}
+              <source src="/videos/spa-background.mp4" type="video/mp4" />
+            </video>
+          )}
+          <div className="absolute inset-0 bg-gradient-to-r from-rose-600/40 via-rose-500/40 to-rose-400/40" />
         </div>
         
         <motion.div

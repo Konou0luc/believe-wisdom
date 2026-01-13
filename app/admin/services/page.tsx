@@ -500,13 +500,13 @@ export default function AdminServicesPage() {
               title="Aucun service trouvé"
               description={searchQuery || selectedCategory !== 'all' 
                 ? "Aucun service ne correspond à vos critères de recherche."
-                : "Commencez par ajouter votre premier service."
-              }
-            />
-          ) : (
-            <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[640px]">
+            : "Commencez par ajouter votre premier service."
+          }
+        />
+      ) : (
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[640px]">
               <thead className="bg-beige-50">
                 <tr>
                   <th className="px-4 sm:px-6 py-4 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Titre</th>
@@ -534,7 +534,7 @@ export default function AdminServicesPage() {
                       <div className="flex space-x-2">
                         <button
                           onClick={() => handleEdit(service)}
-                          className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          className="p-2 text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
                           title="Modifier"
                         >
                           <Edit size={18} />

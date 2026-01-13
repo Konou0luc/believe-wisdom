@@ -21,13 +21,18 @@ export function formatDate(date: string | Date): string {
   }).format(new Date(date));
 }
 
-export function formatDateTime(date: string | Date): string {
+export function formatDateTime(date: string | Date, heure?: string): string {
+  const dateObj = new Date(date);
+  if (heure) {
+    const [hours, minutes] = heure.split(':');
+    dateObj.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0);
+  }
   return new Intl.DateTimeFormat('fr-FR', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-  }).format(new Date(date));
+  }).format(dateObj);
 }
 

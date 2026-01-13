@@ -1,35 +1,26 @@
 'use client';
 
-export default function GoogleMap() {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+interface GoogleMapProps {
+  height?: number;
+}
 
-  if (!apiKey) {
-    return (
-      <div className="h-64 bg-beige-100 rounded-xl flex items-center justify-center border border-gray-200">
-        <div className="text-center">
-          <p className="text-gray-600 mb-2 text-sm">Carte Google Maps</p>
-          <p className="text-xs text-gray-500">
-            Configurez NEXT_PUBLIC_GOOGLE_MAPS_API_KEY dans .env.local
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  const address = encodeURIComponent('Adresse à confirmer');
-  const embedUrl = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${address}`;
+export default function GoogleMap({ height = 450 }: GoogleMapProps) {
+  // URL embed Google Maps pour CS Les Lumières
+  const embedUrl = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14158.04573960265!2d1.124115440609637!3d6.226684653605475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10215b99356e6957%3A0xcf3f65c76d9f021c!2sCS%20Les%20Lumi%C3%A8res!5e0!3m2!1sfr!2stg!4v1768255608002!5m2!1sfr!2stg';
 
   return (
+    <div className="w-full rounded-xl overflow-hidden shadow-sm border border-gray-200">
     <iframe
+        src={embedUrl}
       width="100%"
-      height="400"
+        height={height}
       style={{ border: 0 }}
+        allowFullScreen
       loading="lazy"
-      allowFullScreen
       referrerPolicy="no-referrer-when-downgrade"
-      src={embedUrl}
-      className="rounded-xl"
+        className="w-full"
     />
+    </div>
   );
 }
 

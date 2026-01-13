@@ -101,7 +101,7 @@ export default function AdminTemoignagesPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-        <div>
+    <div>
           <h1 className="text-2xl sm:text-3xl font-normal text-gray-900 mb-2">Témoignages</h1>
           <p className="text-sm text-gray-500">Gérez et modérez les témoignages de vos clients</p>
         </div>
@@ -134,7 +134,7 @@ export default function AdminTemoignagesPage() {
             className="bg-white rounded-xl shadow-sm p-4 border border-gray-100"
           >
             <p className="text-sm text-gray-600 mb-1">En attente</p>
-            <p className="text-2xl font-medium text-yellow-600">{stats.enAttente}</p>
+            <p className="text-2xl font-medium text-beige-600">{stats.enAttente}</p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -144,7 +144,7 @@ export default function AdminTemoignagesPage() {
           >
             <p className="text-sm text-gray-600 mb-1">Note moyenne</p>
             <div className="flex items-center space-x-1">
-              <Star className="text-yellow-400 fill-current" size={18} />
+              <Star className="text-rose-400 fill-current" size={18} />
               <p className="text-2xl font-medium text-gray-900">{stats.moyenneNote.toFixed(1)}</p>
             </div>
           </motion.div>
@@ -246,7 +246,7 @@ export default function AdminTemoignagesPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
               className={`bg-white rounded-2xl shadow-sm p-6 border ${
-                !temoignage.approuve ? 'border-yellow-300 bg-yellow-50/30' : 'border-gray-100'
+                !temoignage.approuve ? 'border-beige-300 bg-beige-50/30' : 'border-gray-100'
               }`}
             >
               <div className="flex justify-between items-start mb-4">
@@ -265,7 +265,7 @@ export default function AdminTemoignagesPage() {
                       <Star
                         key={star}
                         size={16}
-                        className={star <= temoignage.note ? 'text-yellow-400 fill-current' : 'text-gray-300'}
+                        className={star <= temoignage.note ? 'text-rose-400 fill-current' : 'text-gray-300'}
                       />
                     ))}
                     <span className="ml-2 text-sm text-gray-600">({temoignage.note}/5)</span>
@@ -295,7 +295,7 @@ export default function AdminTemoignagesPage() {
                 </div>
               </div>
               {!temoignage.approuve && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-2 text-sm text-yellow-800">
+                <div className="bg-beige-50 border border-beige-200 rounded-lg p-2 text-sm text-beige-800">
                   En attente de modération
                 </div>
               )}

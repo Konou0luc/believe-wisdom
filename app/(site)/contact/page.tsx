@@ -136,7 +136,7 @@ export default function ContactPage() {
                 <MapPin className="text-rose-500 mt-1 flex-shrink-0" size={24} />
                 <div>
                   <h3 className="font-medium text-gray-900 mb-1">Adresse</h3>
-                  <p className="text-gray-600">À confirmer</p>
+                  <p className="text-gray-600">N° 222, Avenue de la République, Lomé, Togo</p>
                 </div>
               </div>
 
@@ -144,7 +144,12 @@ export default function ContactPage() {
                 <Phone className="text-rose-500 mt-1 flex-shrink-0" size={24} />
                 <div>
                   <h3 className="font-medium text-gray-900 mb-1">Téléphone</h3>
-                  <p className="text-gray-600">À confirmer</p>
+                  <a 
+                    href="tel:+33780807662" 
+                    className="text-rose-600 hover:text-rose-700 transition-colors"
+                  >
+                    +33 7 80 80 76 62
+                  </a>
                 </div>
               </div>
 
@@ -152,7 +157,12 @@ export default function ContactPage() {
                 <Mail className="text-rose-500 mt-1 flex-shrink-0" size={24} />
                 <div>
                   <h3 className="font-medium text-gray-900 mb-1">Email</h3>
-                  <p className="text-gray-600">À confirmer</p>
+                  <a 
+                    href="mailto:believe-wisdom@gmail.com" 
+                    className="text-rose-600 hover:text-rose-700 transition-colors"
+                  >
+                    believe-wisdom@gmail.com
+                  </a>
                 </div>
               </div>
 
@@ -167,7 +177,7 @@ export default function ContactPage() {
             </div>
 
             <div className="mt-8">
-              <GoogleMap />
+              <GoogleMap height={450} />
             </div>
           </motion.div>
 
